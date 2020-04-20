@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_perguntas/resposta.dart';
-import 'questao.dart';
+import 'package:projeto_perguntas/questionario.dart';
+import 'resultado.dart';
 
 void main() => runApp(PerguntaApp());
 
@@ -11,40 +11,37 @@ class PerguntaApp extends StatefulWidget {
 
 class _PerguntaAppState extends State<PerguntaApp> {
   var _perguntaSelecionada = 0;
+  final List<Map<String, Object>> _perguntas = const [
+    {
+      'texto': 'Qual é a sua cor favorita ?',
+      'respostas': ['Preto', 'Vermelho', 'Verde', 'Branco'],
+    },
+    {
+      'texto': 'Qual é a sua animal favorita ?',
+      'respostas': ['Coelho', 'Cobra', 'Lagarto', 'Tigre'],
+    },
+    {
+      'texto': 'Qual é a sua instrutor favorito ?',
+      'respostas': ['Maria', 'Angelo', 'Carol', 'Betina'],
+    },
+  ];
 
   void _responder() {
-    setState(() {
-      _perguntaSelecionada++;
-      print(_perguntaSelecionada);
-    });
+    if (temPerguntaSelecionada) {
+      setState(
+        () {
+          _perguntaSelecionada++;
+        },
+      );
+    }
+  }
+
+  bool get temPerguntaSelecionada {
+    return _perguntaSelecionada < _perguntas.length;
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, Object>> perguntas = [
-      {
-        'texto' : 'Qual é a sua cor favorita ?',
-        'respostas' : ['Preto', 'Vermelho', 'Verde', 'Branco'],
-      },
-      {
-        'texto' : 'Qual é a sua animal favorita ?',
-        'respostas' : ['Coelho', 'Cobra', 'Verde', 'Branco'],
-      },
-      {
-        'texto' : 'Qual é a sua instrutor favorito ?',
-        'respostas' : ['Maria', 'Angelo', 'Carol', 'Betina'],
-      },
-
-    ];
-
-    // ABORDAGEM DECLARATIVA
-    List<String> respostas = perguntas[_perguntaSelecionada]['respostas'];
-  
-    // ABORTAGEM IMPERATIVA
-    // for(var textoResp in respostas) {
-    //   widgets.add(Resposta(textoResp, _responder));
-    // }
-
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -55,12 +52,13 @@ class _PerguntaAppState extends State<PerguntaApp> {
           centerTitle: true,
           title: Text('Perguntas'),
         ),
-        body: Column(
-          children: <Widget>[
-            Questao(perguntas[_perguntaSelecionada]['texto']),
-            ...respostas.map((t) => Resposta(t, _responder)).toList(),
-          ],
-        ),
+        body: temPerguntaSelecionada
+            ? Questionario(
+                perguntas: _perguntas,
+                perguntaSelecionada: _perguntaSelecionada,
+                quandoResponder: _responder,
+              )
+            : Resultado(),
       ),
     );
   }
