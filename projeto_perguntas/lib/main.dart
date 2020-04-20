@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_perguntas/resposta.dart';
-
 import 'questao.dart';
 
 void main() => runApp(PerguntaApp());
