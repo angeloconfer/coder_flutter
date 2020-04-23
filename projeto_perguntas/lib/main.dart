@@ -10,7 +10,7 @@ class PerguntaApp extends StatefulWidget {
 }
 
 class _PerguntaAppState extends State<PerguntaApp> {
-  var _perguntaSelecionada = 0;
+  
   final List<Map<String, Object>> _perguntas = const [
     {
       'texto': 'Qual é a sua cor favorita ?',
@@ -24,9 +24,15 @@ class _PerguntaAppState extends State<PerguntaApp> {
       'texto': 'Qual é a sua instrutor favorito ?',
       'respostas': ['Maria', 'Angelo', 'Carol', 'Betina'],
     },
-  ];
+   ];
+   
+   var _perguntaSelecionada = 0;
 
-  void _responder() {
+   bool get temPerguntaSelecionada {
+    return _perguntaSelecionada < _perguntas.length;
+   }
+   
+   void _responder() {
     if (temPerguntaSelecionada) {
       setState(
         () {
@@ -34,10 +40,6 @@ class _PerguntaAppState extends State<PerguntaApp> {
         },
       );
     }
-  }
-
-  bool get temPerguntaSelecionada {
-    return _perguntaSelecionada < _perguntas.length;
   }
 
   @override
