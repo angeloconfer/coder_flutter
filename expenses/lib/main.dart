@@ -7,6 +7,7 @@ class ExpensesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: MyHomePage(),
     );
   }
@@ -72,10 +73,17 @@ class MyHomePage extends StatelessWidget {
                       ),
                     ),
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(tr.title),
+                        Text(tr.title,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            )),
                         Text(
                           tr.date.toString(),
+                          style: TextStyle(
+                            color:Colors.grey,
+                          ),
                         ),
                       ],
                     )
