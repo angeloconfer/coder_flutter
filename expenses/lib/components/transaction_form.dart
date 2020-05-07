@@ -7,6 +7,17 @@ class TransactionForm extends StatelessWidget {
 
   TransactionForm(this.onSubmit);
 
+  _submitForm() {
+    final title = titleContoller.text;
+    final value = double.tryParse(valueContoller.text) ?? 0.0;
+
+    if (title.isEmpty || value <= 0) {
+      return;
+    }
+
+    onSubmit(title, value);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -17,9 +28,12 @@ class TransactionForm extends StatelessWidget {
           children: <Widget>[
             TextField(
               controller: titleContoller,
+              onSubmitted: (_) => _submitForm(),
               decoration: InputDecoration(labelText: 'Título'),
             ),
             TextField(
+              keyboardType: TextInputType.number,
+              onSubmitted: (_) => _submitForm(),
               controller: valueContoller,
               decoration: InputDecoration(
                 labelText: 'Valor (R\$)',
@@ -31,11 +45,7 @@ class TransactionForm extends StatelessWidget {
                 FlatButton(
                   child: Text('Nova transação'),
                   textColor: Colors.purple,
-                  onPressed: () {
-                    final title = titleContoller.text;
-                    final value = double.tryParse(valueContoller.text) ?? 0.0;
-                    onSubmit(title, value);
-                  },
+                  onPressed: _submitForm,
                 ),
               ],
             )
