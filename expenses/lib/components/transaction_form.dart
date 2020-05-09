@@ -43,7 +43,7 @@ class TransactionForm extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 FlatButton(
-                  child: Text('Nova transação'),
+                  child: Text('Adicionar nova transação'),
                   textColor: Colors.purple,
                   onPressed: _submitForm,
                 ),
